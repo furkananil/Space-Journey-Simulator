@@ -1,5 +1,7 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("uzay simulasyonuna hosgeldiniz!");
+        
+        Simulasyon simulasyonBaslat = new Simulasyon();
+        simulasyonBaslat.baslat();
     }
 }

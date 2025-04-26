@@ -39,7 +39,7 @@ public class Simulasyon {
             guncelleNufuslar();
             temizle();
             yazdirDurum();
-            Thread.sleep(100);
+            Thread.sleep(50);
 
             bitti = araclar.stream().allMatch(a -> a.varisYaptiMi() || a.imha);
         }
@@ -47,7 +47,7 @@ public class Simulasyon {
         System.out.println("Simülasyon tamamlandı.");
     }
 
-    public void temizle() {
+    private void temizle() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
@@ -66,20 +66,42 @@ public class Simulasyon {
     }
 
     private void yazdirDurum() {
-        System.out.println("Gezegenler:");
-        for (Gezegen g : gezegenler) System.out.printf("--- %-3s ---       ", g.ad);
+        System.out.println("\nGezegenler:");
+    
+        // Gezegen adları
+        System.out.printf("%-17s", ""); 
+        for (Gezegen g : gezegenler) {
+            System.out.printf("--- %s ---           ", g.ad); 
+        }
         System.out.println();
-        for (Gezegen g : gezegenler) System.out.printf("Tarih  %-10s   ", g.getTarihStr());
+    
+        // Gezegen tarihleri
+        System.out.printf("%-17s", "Tarih");
+        for (Gezegen g : gezegenler) {
+            System.out.printf("%-20s", g.getTarihStr());
+        }
         System.out.println();
-        for (Gezegen g : gezegenler) System.out.printf("Nüfus     %-10d   ", g.nufus);
-        System.out.println("\n\nUzay Araçları:");
-        System.out.printf("%-10s %-10s %-6s %-6s %-18s %-20s\n", "Araç Adı", "Durum", "Çıkış", "Varış", "Hedefe Kalan Saat", "Hedefe Varacağı Tarih");
+    
+        // Gezegen nüfusları
+        System.out.printf("%-17s", "Nüfus");
+        for (Gezegen g : gezegenler) {
+            System.out.printf("%-20d", g.nufus);
+        }
+        System.out.println("\n");
+    
+        // Uzay araçları başlık
+        System.out.println("Uzay Araçları:");
+        System.out.printf("%-18s %-12s %-10s %-12s %-22s %-25s\n",
+                          "Araç Adı", "Durum", "Çıkış", "Varış", "Hedefe Kalan Saat", "Hedefe Varacağı Tarih");
+    
+        // Uzay araçları bilgileri
         for (UzayAraci a : araclar) {
             String durum = a.getDurum();
             String kalanSaat = durum.equals("IMHA") ? "--" : String.valueOf(a.kalanMesafe);
             String tarih = durum.equals("IMHA") ? "--" : a.getVarisTarihi(gezegenMap.get(a.varis));
-            System.out.printf("%-10s %-10s %-6s %-6s %-18s %-20s\n",
+            System.out.printf("%-18s %-12s %-10s %-12s %-22s %-25s\n",
                     a.ad, durum, a.cikis, a.varis, kalanSaat, tarih);
         }
     }
+    
 }

@@ -6,6 +6,7 @@ public class UzayAraci {
     public int mesafe, kalanMesafe;
     public boolean imha = false;
     public boolean kalkti = false;
+    private String varisTarihi = null;
     public ArrayList<Kisi> yolcular = new ArrayList<>();
 
     public UzayAraci(String ad, String cikis, String varis, Zaman cikisTarihi, int mesafe) {
@@ -39,6 +40,11 @@ public class UzayAraci {
 
     public String getVarisTarihi(Gezegen varisGezegeni) {
         if (imha) return "--";
+        if (varisYaptiMi()) {
+            if (this.varisTarihi != null) return this.varisTarihi;
+            this.varisTarihi = varisGezegeni.getTarihStr();
+            return this.varisTarihi;
+        }
         Zaman z = new Zaman(varisGezegeni.tarih.gun, varisGezegeni.tarih.ay, varisGezegeni.tarih.yil);
         z.saatIlerle(kalanMesafe, varisGezegeni.gunSaatSayisi);
         return z.toString();

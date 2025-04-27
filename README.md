@@ -1,18 +1,12 @@
-## Getting Started
+## 🚀 Uzay Simülasyonu Projesi
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Proje Tanımı
 
-## Folder Structure
+Bu projede, farklı gezegenler arasında seyahat eden uzay araçlarının ve yolcularının simülasyonu yapılmaktadır.Simülasyon her saat güncellenir ve gezegenlerin tarihi/saat bilgileri, araçların durumu ve yolcuların hayatta kalma bilgileri sürekli izlenir.
 
-The workspace contains two folders by default, where:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+![Ekran görüntüsü 2025-04-26 161802](https://github.com/user-attachments/assets/4129da71-3ea5-4e10-a699-8f12423cc31c)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+![Ekran görüntüsü 2025-04-27 184454](https://github.com/user-attachments/assets/212f661c-556e-482c-b611-3deb640363bc)
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+![Ekran görüntüsü 2025-04-27 184511](https://github.com/user-attachments/assets/9e3f9156-6146-4cb0-ba0b-0134221fd01b)

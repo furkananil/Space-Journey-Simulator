@@ -4,6 +4,8 @@ public class Kisi {
     private int kalanOmur;
     private String uzayAraci;
 
+    
+    // Bilgileri kontrollu bir sekilde al ve kisi nesnesi olustur
     public Kisi(String isim, int yas, int kalanOmur, String uzayAraci) {
         setIsim(isim);
         setYas(yas);
@@ -11,10 +13,12 @@ public class Kisi {
         setUzayAraci(uzayAraci);
     }
 
+    // Kişinin kalan ömrünü azaltır
     public void yasat() {
         if (kalanOmur > 0) kalanOmur--;
     }
 
+    // Kişinin hayatta olup olmadığını kontrol eder
     public boolean hayattaMi() {
         return kalanOmur > 0;
     }

@@ -6,9 +6,11 @@ public class UzayAraci {
     private int mesafe, kalanMesafe;
     private boolean imha = false;
     private boolean kalkti = false;
-    private ArrayList<Kisi> yolcular = new ArrayList<>();
+    private ArrayList<Kisi> yolcular = new ArrayList<>(); // Yolcular listesi
     private String varisTarihi = null;
 
+
+    // Bilgileri kontrollu bir sekilde al ve uzay araci nesnesi olustur
     public UzayAraci(String ad, String cikis, String varis, Zaman cikisTarihi, int mesafe) {
         setAd(ad);
         setCikis(cikis);
@@ -18,6 +20,7 @@ public class UzayAraci {
         this.kalanMesafe = getMesafe();
     }
 
+    // Uzay aracını kalkış yaptıysa ve imha değilse hedef gezegene yönlendirir. Eğer araçta yaşayan yolcu kalmamışsa aracı imha eder
     public void saatIlerle() {
         if (!imha && kalkti && kalanMesafe > 0) {
             kalanMesafe--;
@@ -33,8 +36,10 @@ public class UzayAraci {
         }
     }
 
+    // Varış kontrolü yapar
     public boolean varisYaptiMi() { return kalanMesafe <= 0; }
 
+    // Uzay aracının durumunu döndürür
     public String getDurum() {
         if (imha) return "IMHA";
         if (varisYaptiMi()) return "Vardı";
@@ -42,6 +47,8 @@ public class UzayAraci {
         return "Bekliyor";
     }
 
+    // Uzay aracının varış gezegenine ulaşma tarihini döndürür
+    // Eğer araç imha olduysa "--" döner
     public String getVarisTarihi(Gezegen varisGezegeni) {
         if (imha) return "--";
         if (varisYaptiMi()) {

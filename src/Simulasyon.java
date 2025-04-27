@@ -1,30 +1,36 @@
 import java.util.*;
 
 public class Simulasyon {
-    private ArrayList<Kisi> kisiler;
-    private ArrayList<UzayAraci> araclar;
-    private ArrayList<Gezegen> gezegenler;
-    private HashMap<String, Gezegen> gezegenMap;
+    private ArrayList<Kisi> kisiler; // Kişi listesi
+    private ArrayList<UzayAraci> araclar; // Uzay aracı listesi
+    private ArrayList<Gezegen> gezegenler; // Gezegen listesi
+    private HashMap<String, Gezegen> gezegenMap; // Gezegen adlarını anahtar olarak kullanan bir harita
 
+
+    // Simülasyonu başlatan metod
     public void baslat() throws Exception {
-        kisiler = DosyaOkuma.kisileriYukle("Kisiler.txt");
-        araclar = DosyaOkuma.uzayAraclariniYukle("Araclar.txt");
-        gezegenler = DosyaOkuma.gezegenleriYukle("Gezegenler.txt");
-        gezegenMap = new HashMap<>();
-        for (Gezegen g : gezegenler) gezegenMap.put(g.getAd(), g);
+        kisiler = DosyaOkuma.kisileriYukle("Kisiler.txt"); // Kişileri dosyadan yükle
+        araclar = DosyaOkuma.uzayAraclariniYukle("Araclar.txt"); // Uzay araçlarını dosyadan yükle
+        gezegenler = DosyaOkuma.gezegenleriYukle("Gezegenler.txt"); // Gezegenleri dosyadan yükle
+        gezegenMap = new HashMap<>(); 
+        for (Gezegen g : gezegenler) gezegenMap.put(g.getAd(), g); // Gezegen adlarını haritaya ekle
 
+        // Kişileri ilgili uzay araçlarına ekle
         for (Kisi k : kisiler) {
             for (UzayAraci a : araclar) {
                 if (a.getAd().equals(k.getUzayAraci())) a.getYolcular().add(k);
             }
         }
 
-        int toplamSure = 0;
         boolean bitti = false;
         while (!bitti) {
-            toplamSure++;
-            for (Gezegen g : gezegenler) g.zamanIlerle(1);
+            for (Gezegen g : gezegenler) g.zamanIlerle(1); // Gezegenlerin 1 saat ilerlet
 
+            for (UzayAraci a : araclar) {
+                a.saatIlerle(); // Uzay araçlarını kalktıysa ilerlet
+            }
+
+            // İlgili Gezegenin tarihi Uzay Aracın Çıkış tarihine eşit olduğunda Aracı kaldır
             for (UzayAraci a : araclar) {
                 Gezegen g = gezegenMap.get(a.getCikis());
                 if (!a.isKalkti() && g.getTarih().getGun() == a.getCikisTarihi().getGun() &&
@@ -34,37 +40,38 @@ public class Simulasyon {
                 }
             }
 
-            for (UzayAraci a : araclar) {
-                a.saatIlerle(); // herkes için saat ilerletiyoruz
-            }
-
             guncelleNufuslar();
             temizle();
             yazdirDurum();
-            Thread.sleep(50);
+            Thread.sleep(30); // 30 ms bekle
 
+            // Simülasyon bitiş kontrolü. eğer tüm araçlar varış yaptıysa veya imha olduysa simülasyon biter.
             bitti = araclar.stream().allMatch(a -> a.varisYaptiMi() || a.isImha());
         }
-
         System.out.println("Simülasyon tamamlandı.");
-        System.out.println("Toplam süre: " + toplamSure + " saat.");
     }
 
+    // Ekranı temizleme işlemi
     private void temizle() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+
+    // Nüfus güncelleme işlemi
     private void guncelleNufuslar() {
+        // Gezegenlerin nüfusunu sıfırla
         for (Gezegen g : gezegenler) {
             g.nufusSifirla();
         }
-    
+        
+        // Uzay araçlarının yolcularını gezegenlere ekle
         for (UzayAraci a : araclar) {
-            if (!a.isImha()) { // Sadece IMHA olmayan araçları dikkate al
-                String bulundugu = a.isKalkti() ? a.getVaris() : a.getCikis();
+            if (!a.isImha()) { 
+                String bulundugu = a.isKalkti() ? a.getVaris() : a.getCikis(); // Bulunduğu gezegen, Araç kalktıysa varış gezegeni, değilse çıkış gezegeni
                 Gezegen g = gezegenMap.get(bulundugu);
     
+                // Yolcuları gezegene ekle
                 for (Kisi k : a.getYolcular()) {
                     if (k.hayattaMi()) {
                         g.nufusArttir();
@@ -74,13 +81,15 @@ public class Simulasyon {
         }
     }
 
+
+    // Bilgilerini konsola yazdırma işlemi
     private void yazdirDurum() {
         System.out.println("\nGezegenler:");
     
         // Gezegen adları
         System.out.printf("%-17s", ""); 
         for (Gezegen g : gezegenler) {
-            System.out.printf("--- %s ---          ", g.getAd()); 
+            System.out.printf("--- %s ---           ", g.getAd()); 
         }
         System.out.println();
     

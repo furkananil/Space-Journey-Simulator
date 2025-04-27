@@ -1,34 +1,20 @@
-Kisi1#21#1470#Arac 00
-Kisi2#21#1470#Arac 00
-Kisi3#21#1010#Arac 00
-Kisi4#21#910#Arac 01
-Kisi5#21#1010#Arac 01
-Kisi6#21#300#Arac 02
-Kisi4#21#910#Arac 02
-Kisi5#21#2600#Arac 02
-Kisi6#21#2600#Arac 03
-Kisi4#21#240#Arac 03
-Kisi5#21#340#Arac 04
-Kisi6#21#710#Arac 04
-Kisi4#21#240#Arac 04
-Kisi5#21#1600#Arac 04
-Kisi6#21#1600#Arac 05
-Kisi4#21#240#Arac 05
-Kisi5#21#1010#Arac 05
-Kisi6#21#710#Arac 05
-Kisi6#21#710#Arac 05
-Kisi4#21#910#Arac 06
-Kisi5#21#1010#Arac 06
-Kisi6#21#710#Arac 06
-Kisi6#21#710#Arac 06
-Kisi4#21#4200#Arac 06
-Kisi5#21#1010#Arac 06
-Kisi6#21#6710#Arac 06
-Kisi6#21#6710#Arac 07
-Kisi4#21#4200#Arac 07
-Kisi5#21#1010#Arac 07
-Kisi6#21#710#Arac 08
-Kisi6#21#240#Arac 08
-Kisi4#21#1910#Arac 09
-Kisi5#21#11010#Arac 09
-Kisi6#21#240#Arac 09
+Ali#30#1000#A1
+Ayşe#28#90#A1
+Mehmet#45#200#A2
+Elif#33#750#A2
+Veli#40#650#A3
+Deniz#26#700#A3
+Kemal#35#850#B1
+Zeynep#29#1000#B1
+Serkan#38#7#B2
+Melisa#27#60#B2
+Mert#41#500#C1
+Tuğba#36#880#C1
+Barış#34#720#C2
+Eda#32#760#C2
+Can#28#670#D1
+Derya#30#15#D1
+Onur#37#40#B2
+Gizem#31#690#C2
+Burak#39#770#A3
+Seda#25#960#D1

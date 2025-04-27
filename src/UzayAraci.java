@@ -1,32 +1,36 @@
 import java.util.ArrayList;
 
 public class UzayAraci {
-    public String ad, cikis, varis;
-    public Zaman cikisTarihi;
-    public int mesafe, kalanMesafe;
-    public boolean imha = false;
-    public boolean kalkti = false;
+    private String ad, cikis, varis;
+    private Zaman cikisTarihi;
+    private int mesafe, kalanMesafe;
+    private boolean imha = false;
+    private boolean kalkti = false;
+    private ArrayList<Kisi> yolcular = new ArrayList<>();
     private String varisTarihi = null;
-    public ArrayList<Kisi> yolcular = new ArrayList<>();
 
     public UzayAraci(String ad, String cikis, String varis, Zaman cikisTarihi, int mesafe) {
-        this.ad = ad;
-        this.cikis = cikis;
-        this.varis = varis;
-        this.cikisTarihi = cikisTarihi;
-        this.mesafe = mesafe;
-        this.kalanMesafe = mesafe;
+        setAd(ad);
+        setCikis(cikis);
+        setVaris(varis);
+        setCikisTarihi(cikisTarihi);
+        setMesafe(mesafe);
+        this.kalanMesafe = getMesafe();
     }
 
     public void saatIlerle() {
-        if (!imha && kalanMesafe > 0 && kalkti) kalanMesafe--;
-
+        if (!imha && kalkti && kalanMesafe > 0) {
+            kalanMesafe--;
+        }
+    
         yolcular.removeIf(k -> {
             k.yasat();
             return !k.hayattaMi();
         });
-
-        if (yolcular.isEmpty()) imha = true;
+    
+        if (!imha && yolcular.isEmpty()) {
+            imha = true;
+        }
     }
 
     public boolean varisYaptiMi() { return kalanMesafe <= 0; }
@@ -45,8 +49,31 @@ public class UzayAraci {
             this.varisTarihi = varisGezegeni.getTarihStr();
             return this.varisTarihi;
         }
-        Zaman z = new Zaman(varisGezegeni.tarih.gun, varisGezegeni.tarih.ay, varisGezegeni.tarih.yil);
-        z.saatIlerle(kalanMesafe, varisGezegeni.gunSaatSayisi);
+        Zaman z = new Zaman(varisGezegeni.getTarih().getGun(), varisGezegeni.getTarih().getAy(), varisGezegeni.getTarih().getYil());
+        z.saatIlerle(kalanMesafe, varisGezegeni.getGunSaatSayisi());
         return z.toString();
     }
+
+    
+    // Getter ve Setter metodları
+
+    public String getAd() { return ad; }
+    public String getCikis() { return cikis; }
+    public String getVaris() { return varis; }
+    public Zaman getCikisTarihi() { return cikisTarihi; }
+    public int getMesafe() { return mesafe; }
+    public int getKalanMesafe() { return kalanMesafe; }
+    public boolean isImha() { return imha; }
+    public boolean isKalkti() { return kalkti; }
+    public ArrayList<Kisi> getYolcular() { return yolcular; }
+
+    public void setAd(String ad) { this.ad = ad; }
+    public void setCikis(String cikis) { this.cikis = cikis; }
+    public void setVaris(String varis) { this.varis = varis; }
+    public void setCikisTarihi(Zaman cikisTarihi) { this.cikisTarihi = cikisTarihi; }
+    public void setMesafe(int mesafe) { this.mesafe = mesafe; }
+    public void setKalanMesafe(int kalanMesafe) { this.kalanMesafe = kalanMesafe; }
+    public void setImha(boolean imha) { this.imha = imha; }
+    public void setKalkti(boolean kalkti) { this.kalkti = kalkti; }
+    public void setYolcular(ArrayList<Kisi> yolcular) { this.yolcular = yolcular; }
 }

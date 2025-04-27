@@ -11,29 +11,31 @@ public class Simulasyon {
         araclar = DosyaOkuma.uzayAraclariniYukle("Araclar.txt");
         gezegenler = DosyaOkuma.gezegenleriYukle("Gezegenler.txt");
         gezegenMap = new HashMap<>();
-        for (Gezegen g : gezegenler) gezegenMap.put(g.ad, g);
+        for (Gezegen g : gezegenler) gezegenMap.put(g.getAd(), g);
 
         for (Kisi k : kisiler) {
             for (UzayAraci a : araclar) {
-                if (a.ad.equals(k.uzayAraci)) a.yolcular.add(k);
+                if (a.getAd().equals(k.getUzayAraci())) a.getYolcular().add(k);
             }
         }
 
+        int toplamSure = 0;
         boolean bitti = false;
         while (!bitti) {
+            toplamSure++;
             for (Gezegen g : gezegenler) g.zamanIlerle(1);
 
             for (UzayAraci a : araclar) {
-                Gezegen g = gezegenMap.get(a.cikis);
-                if (!a.kalkti && g.tarih.gun == a.cikisTarihi.gun &&
-                        g.tarih.ay == a.cikisTarihi.ay &&
-                        g.tarih.yil == a.cikisTarihi.yil) {
-                    a.kalkti = true;
+                Gezegen g = gezegenMap.get(a.getCikis());
+                if (!a.isKalkti() && g.getTarih().getGun() == a.getCikisTarihi().getGun() &&
+                        g.getTarih().getAy() == a.getCikisTarihi().getAy() &&
+                        g.getTarih().getYil() == a.getCikisTarihi().getYil()) {
+                    a.setKalkti(true);
                 }
             }
 
             for (UzayAraci a : araclar) {
-                if (!a.varisYaptiMi()) a.saatIlerle();
+                a.saatIlerle(); // herkes için saat ilerletiyoruz
             }
 
             guncelleNufuslar();
@@ -41,10 +43,11 @@ public class Simulasyon {
             yazdirDurum();
             Thread.sleep(50);
 
-            bitti = araclar.stream().allMatch(a -> a.varisYaptiMi() || a.imha);
+            bitti = araclar.stream().allMatch(a -> a.varisYaptiMi() || a.isImha());
         }
 
         System.out.println("Simülasyon tamamlandı.");
+        System.out.println("Toplam süre: " + toplamSure + " saat.");
     }
 
     private void temizle() {
@@ -53,13 +56,19 @@ public class Simulasyon {
     }
 
     private void guncelleNufuslar() {
-        for (Gezegen g : gezegenler) g.nufusSifirla();
+        for (Gezegen g : gezegenler) {
+            g.nufusSifirla();
+        }
+    
         for (UzayAraci a : araclar) {
-            if (!a.imha && (!a.kalkti || a.varisYaptiMi())) {
-                String bulundugu = a.kalkti ? a.varis : a.cikis;
+            if (!a.isImha()) { // Sadece IMHA olmayan araçları dikkate al
+                String bulundugu = a.isKalkti() ? a.getVaris() : a.getCikis();
                 Gezegen g = gezegenMap.get(bulundugu);
-                for (Kisi k : a.yolcular) {
-                    if (k.hayattaMi()) g.nufusArttir();
+    
+                for (Kisi k : a.getYolcular()) {
+                    if (k.hayattaMi()) {
+                        g.nufusArttir();
+                    }
                 }
             }
         }
@@ -71,7 +80,7 @@ public class Simulasyon {
         // Gezegen adları
         System.out.printf("%-17s", ""); 
         for (Gezegen g : gezegenler) {
-            System.out.printf("--- %s ---           ", g.ad); 
+            System.out.printf("--- %s ---          ", g.getAd()); 
         }
         System.out.println();
     
@@ -85,7 +94,7 @@ public class Simulasyon {
         // Gezegen nüfusları
         System.out.printf("%-17s", "Nüfus");
         for (Gezegen g : gezegenler) {
-            System.out.printf("%-20d", g.nufus);
+            System.out.printf("%-20d", g.getNufus());
         }
         System.out.println("\n");
     
@@ -97,10 +106,10 @@ public class Simulasyon {
         // Uzay araçları bilgileri
         for (UzayAraci a : araclar) {
             String durum = a.getDurum();
-            String kalanSaat = durum.equals("IMHA") ? "--" : String.valueOf(a.kalanMesafe);
-            String tarih = durum.equals("IMHA") ? "--" : a.getVarisTarihi(gezegenMap.get(a.varis));
+            String kalanSaat = durum.equals("IMHA") ? "--" : String.valueOf(a.getKalanMesafe());
+            String tarih = durum.equals("IMHA") ? "--" : a.getVarisTarihi(gezegenMap.get(a.getVaris()));
             System.out.printf("%-18s %-12s %-10s %-12s %-22s %-25s\n",
-                    a.ad, durum, a.cikis, a.varis, kalanSaat, tarih);
+            a.getAd(), durum, a.getCikis(), a.getVaris(), kalanSaat, tarih);
         }
     }
     
